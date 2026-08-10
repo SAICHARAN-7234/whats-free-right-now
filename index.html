@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>WHAT'S FREE RIGHT NOW? | Real-Time Campus Availability</title>
+  <meta name="description" content="Know before you go. Real-time availability platform for 110-acre engineering college campus facilities, badminton courts, study spaces, project huts, and grounds.">
+  
+  <!-- PWA Manifest & Theme -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#07090e">
+  <meta name="color-scheme" content="dark light">
+  
+  <!-- iOS PWA Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="What's Free?">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  
+  <!-- Android PWA -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="What's Free?">
+  
+  <!-- MS Tile -->
+  <meta name="msapplication-TileColor" content="#07090e">
+  <meta name="msapplication-tap-highlight" content="no">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="icons/icon-192.svg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ==========================================
+       1. Header & Top Navigation
+       ========================================== -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-icon-wrapper">📍</div>
+      <div>
+        <div class="brand-title">WHAT'S FREE RIGHT NOW?</div>
+        <div class="brand-tagline">Know before you go</div>
+      </div>
+    </div>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="desktop-nav">
+      <a href="#" class="nav-link active" data-tab="home">Home</a>
+      <a href="#" class="nav-link" data-tab="radar">Opportunity Radar</a>
+      <a href="#" class="nav-link" data-tab="map">Campus Map</a>
+      <a href="#" class="nav-link" data-tab="explore">Explore</a>
+      <a href="#" class="nav-link" data-tab="bookings">My Bookings</a>
+      <a href="#" class="nav-link" data-tab="admin">Admin</a>
+    </nav>
+
+    <div class="header-controls">
+      <!-- Simulated Location Switcher Button -->
+      <button class="location-picker-btn" id="location-picker-btn" title="Change simulated location">
+        <span>📍</span>
+        <span id="current-location-name">Academic Block C</span>
+      </button>
+
+      <!-- Live Pulse Counter Badge -->
+      <div class="live-pulse-badge">
+        <span class="dot-pulse"></span>
+        <span id="header-live-count">14 Free Now</span>
+      </div>
+
+      <!-- Theme Switcher -->
+      <button class="theme-toggle" id="theme-toggle-btn" title="Toggle color theme">🌙 Dark</button>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       2. Main Content Area
+       ========================================== -->
+  <main class="container">
+
+    <!-- ----------------------------------------
+         VIEW 1: HOME PAGE
+         ---------------------------------------- -->
+    <div id="view-home" class="view-section">
+
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <canvas id="hero-canvas" class="hero-background-canvas"></canvas>
+        
+        <div class="hero-content">
+          <div class="hero-badge">⚡ Real-Time 110-Acre Campus Intelligence</div>
+          <h1 class="hero-heading">WHAT'S FREE <span class="text-gradient">RIGHT NOW?</span></h1>
+          <p class="hero-subheading">Your campus. Your time. Know what’s available before you go.</p>
+
+          <!-- Core Problem Callout Banner -->
+          <div class="problem-banner">
+            <div class="problem-banner-icon">💡</div>
+            <div>
+              <div class="problem-banner-title">Core Problem Solved</div>
+              <div class="problem-banner-text">
+                Instead of physically walking 600 meters across campus only to discover a court or study room is fully occupied, check real-time availability in 5 seconds and reserve your spot instantly.
+              </div>
+            </div>
+          </div>
+
+          <!-- Natural Language Smart Search Box -->
+          <div class="search-container">
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="main-search-input" class="search-input" placeholder="What are you looking for? (e.g. 'badminton', 'quiet study spot', 'juice nearby')" autocomplete="off" />
+              <span class="nl-indicator">AI Parser Active</span>
+              <button class="search-clear-btn" id="search-clear-btn">&times;</button>
+            </div>
+
+            <!-- Example Natural Language Chips -->
+            <div class="search-presets">
+              <span class="search-preset-label">Try searching:</span>
+              <button class="preset-chip" data-query="Where can I play badminton now?">🏸 Badminton</button>
+              <button class="preset-chip" data-query="Find a quiet place for two people.">📚 Study space</button>
+              <button class="preset-chip" data-query="Is the cricket ground free?">🏏 Cricket ground</button>
+              <button class="preset-chip" data-query="Where can 8 people sit together?">👥 Project hut</button>
+              <button class="preset-chip" data-query="Where can I get juice nearby?">☕ Café / Juice</button>
+              <button class="preset-chip" data-query="Where can I walk right now?">🌳 Walking route</button>
+              <button class="preset-chip" data-query="Where can I study for one hour?">🧪 Lab / Utility</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Natural Language Smart Intent Banner -->
+      <div id="nl-intent-banner" class="problem-banner" style="display: none; margin-bottom: 2rem; background: rgba(6, 182, 212, 0.08); border-left-color: var(--accent-cyan);"></div>
+
+      <!-- Time-Saving Smart Alternatives Container -->
+      <div id="smart-alternatives-container"></div>
+
+      <!-- Live Category Filters -->
+      <section>
+        <div class="categories-wrapper">
+          <div class="category-bar" id="category-bar">
+            <!-- Dynamic Category Pills Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Real-Time Facility Grid -->
+      <section class="section" style="padding-top: 0;">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">⚡ Live Campus Availability</h2>
+            <p class="section-subtitle">Real-time status, occupancy, and estimated walking times from Academic Block C</p>
+          </div>
+          <!-- Quick Filter Button -->
+          <button class="btn btn-secondary" id="sim-cancellation-btn" style="width: auto; font-size: 0.8rem;">
+            🔔 Demo: Trigger Waitlist Alert
+          </button>
+        </div>
+
+        <div class="facility-grid" id="facility-grid">
+          <!-- Dynamic Facility Cards Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Nearby Availability Section -->
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">📍 Available Near You</h2>
+            <p class="section-subtitle">You are near Academic Block C • Top closest open spaces</p>
+          </div>
+        </div>
+        <div id="nearby-list-container" style="display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+          <!-- Nearby items rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Campus Time Machine ("COMING FREE") -->
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">⏰ Campus Time Machine</h2>
+            <p class="section-subtitle">COMING FREE IN THE NEXT 30 MINUTES — Plan your movement ahead</p>
+          </div>
+        </div>
+        <div id="time-machine-container">
+          <!-- Timeline items rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Campus Pulse Operating System Dashboard -->
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">📊 Campus Pulse</h2>
+            <p class="section-subtitle">Live operating system metrics across the 110-acre campus</p>
+          </div>
+        </div>
+        <div class="pulse-grid" id="campus-pulse-stats">
+          <!-- Stats rendered by JS -->
+        </div>
+
+        <!-- Emergency / Utility Status Banner -->
+        <div class="utility-bar">
+          <div class="utility-item">⚡ <strong>Power Status:</strong> 100% UPS Grid Online</div>
+          <div class="utility-item">📶 <strong>Campus Wi-Fi:</strong> High Speed 980 Mbps</div>
+          <div class="utility-item">💧 <strong>Water Stations:</strong> Operational</div>
+          <div class="utility-item">📢 <strong>Notice:</strong> Digital Auditorium occupied until 4:30 PM</div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ----------------------------------------
+         VIEW 2: OPPORTUNITY RADAR ("WHAT CAN I DO RIGHT NOW?")
+         ---------------------------------------- -->
+    <div id="view-radar" class="view-section" style="display: none;">
+      <section class="section">
+        <div class="radar-card">
+          <h2 style="font-size: 1.8rem; font-weight: 900;" class="text-gradient">CAMPUS OPPORTUNITY RADAR</h2>
+          <p style="color: var(--text-secondary); margin-top: 0.25rem;">
+            Instead of asking only "What is free?", let the platform generate personalized recommendations based on your time, group size, and vibe.
+          </p>
+
+          <div class="radar-wizard-steps">
+            <div class="wizard-step">
+              <label class="wizard-label">1. How much time do you have?</label>
+              <select id="radar-time-select" class="wizard-select">
+                <option value="15">15 Minutes</option>
+                <option value="30" selected>30 Minutes</option>
+                <option value="60">1 Hour</option>
+                <option value="120">2+ Hours</option>
+              </select>
+            </div>
+            <div class="wizard-step">
+              <label class="wizard-label">2. Who are you with?</label>
+              <select id="radar-group-select" class="wizard-select">
+                <option value="1" selected>I'm Alone</option>
+                <option value="2">2 People</option>
+                <option value="4">3-5 Friends</option>
+                <option value="8">6+ Group</option>
+              </select>
+            </div>
+            <div class="wizard-step">
+              <label class="wizard-label">3. What's your goal / vibe?</label>
+              <select id="radar-vibe-select" class="wizard-select">
+                <option value="active" selected>🏸 Something Active / Sports</option>
+                <option value="relax">☕ Relax & Grab Refreshment</option>
+                <option value="study">📚 Quiet Study / Project Work</option>
+                <option value="eat">🧃 Quick Juice & Snack</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="radar-results-container" class="radar-results">
+            <!-- Results rendered by JS -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ----------------------------------------
+         VIEW 3: INTERACTIVE 110-ACRE CAMPUS MAP
+         ---------------------------------------- -->
+    <div id="view-map" class="view-section" style="display: none;">
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🗺️ Interactive 110-Acre Campus Map</h2>
+            <p class="section-subtitle">Click any facility marker to view real-time occupancy, walking route, and instant booking</p>
+          </div>
+        </div>
+
+        <div class="map-container-wrapper">
+          <div class="map-toolbar">
+            <div style="font-weight: 700; font-size: 0.9rem;">📍 User Location: Academic Block C</div>
+            <div class="map-controls-group">
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Legend:</span>
+              <span class="legend-item"><span class="legend-dot" style="background: var(--status-available);"></span> Free</span>
+              <span class="legend-item"><span class="legend-dot" style="background: var(--status-soon);"></span> Soon</span>
+              <span class="legend-item"><span class="legend-dot" style="background: var(--status-occupied);"></span> Occupied</span>
+            </div>
+          </div>
+
+          <div id="campus-map-viewport" class="campus-svg-viewport">
+            <!-- SVG rendered by map.js -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ----------------------------------------
+         VIEW 4: CAMPUS DISCOVERY ("EXPLORE CAMPUS")
+         ---------------------------------------- -->
+    <div id="view-explore" class="view-section" style="display: none;">
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">🧭 Explore Campus Experiences</h2>
+            <p class="section-subtitle">Discover unique spots and experiences across our 110-acre campus</p>
+          </div>
+        </div>
+
+        <div class="facility-grid">
+          <div class="facility-card">
+            <h3>🌳 2.8 km Perimeter Green Walk</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0.5rem 0;">Paved tree-lined walking trail encircling the campus. Best time: Evening sunset.</p>
+            <div style="font-weight: 700; color: var(--status-available);">🟢 Always Open</div>
+          </div>
+          <div class="facility-card">
+            <h3>🌿 Green Open Amphitheater</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0.5rem 0;">Surrounded by dense lush greenery. Perfect for outdoor reading and discussions.</p>
+            <div style="font-weight: 700; color: var(--status-available);">🟢 Available Now</div>
+          </div>
+          <div class="facility-card">
+            <h3>🏕️ Discussion Huts</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0.5rem 0;">12 shaded gazebos with solar charging ports and whiteboards.</p>
+            <div style="font-weight: 700; color: var(--status-available);">🟢 4 of 12 Huts Free</div>
+          </div>
+          <div class="facility-card">
+            <h3>🧃 Fresh Juice & Smoothie Points</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0.5rem 0;">Cold pressed juices, protein shakes, and quick energy refreshments.</p>
+            <div style="font-weight: 700; color: var(--status-available);">🟢 3 Points Open</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ----------------------------------------
+         VIEW 5: MY BOOKINGS DASHBOARD
+         ---------------------------------------- -->
+    <div id="view-bookings" class="view-section" style="display: none;">
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">📅 My Bookings & Waitlists</h2>
+            <p class="section-subtitle">Manage your active reservations, waitlist alerts, and citizenship score</p>
+          </div>
+        </div>
+
+        <!-- No-Show Prevention Score Banner -->
+        <div class="problem-banner" style="border-left-color: var(--status-available);">
+          <div class="problem-banner-icon">🛡️</div>
+          <div>
+            <div class="problem-banner-title">Responsible Campus Citizen Score: 98/100 (Excellent)</div>
+            <div class="problem-banner-text">
+              Zero no-shows recorded this month. Responsible booking ensures facilities remain available for everyone!
+            </div>
+          </div>
+        </div>
+
+        <div id="user-bookings-list">
+          <!-- Bookings rendered by JS -->
+        </div>
+      </section>
+    </div>
+
+    <!-- ----------------------------------------
+         VIEW 6: ADMIN CONTROL CENTER
+         ---------------------------------------- -->
+    <div id="view-admin" class="view-section" style="display: none;">
+      <section class="section">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">⚙️ Admin Control Center</h2>
+            <p class="section-subtitle">Override facility statuses, monitor analytics, and post campus announcements</p>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--radius-xl); padding: 1.5rem;">
+          <h3 style="margin-bottom: 1rem;">Facility Status Overrides</h3>
+          <div id="admin-facility-table">
+            <!-- Facility admin rows rendered by JS -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- ==========================================
+       3. Mobile Bottom Navigation Bar
+       ========================================== -->
+  <nav class="bottom-nav">
+    <button class="bottom-tab active" data-tab="home">
+      <span class="bottom-tab-icon">🏠</span>
+      <span>Home</span>
+    </button>
+    <button class="bottom-tab" data-tab="radar">
+      <span class="bottom-tab-icon">🎯</span>
+      <span>Radar</span>
+    </button>
+    <button class="bottom-tab" data-tab="map">
+      <span class="bottom-tab-icon">🗺️</span>
+      <span>Map</span>
+    </button>
+    <button class="bottom-tab" data-tab="bookings">
+      <span class="bottom-tab-icon">📅</span>
+      <span>Bookings</span>
+    </button>
+    <button class="bottom-tab" data-tab="admin">
+      <span class="bottom-tab-icon">⚙️</span>
+      <span>Admin</span>
+    </button>
+  </nav>
+
+  <!-- ==========================================
+       4. Modal Dialogs
+       ========================================== -->
+
+  <!-- Booking Slot Picker Modal -->
+  <div class="modal-overlay" id="booking-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="booking-modal-title">Reserve Facility</div>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <p id="booking-modal-location" style="color: var(--text-secondary); font-size: 0.85rem;"></p>
+      
+      <div style="margin-top: 1.25rem;">
+        <label style="font-size: 0.82rem; font-weight: 700; color: var(--accent-cyan);">Select Available Slot:</label>
+        <div class="time-slot-grid" id="booking-slots-grid">
+          <!-- Time slots rendered by JS -->
+        </div>
+      </div>
+
+      <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+        <button class="btn btn-secondary modal-close-btn" style="border-radius: var(--radius-md);">Cancel</button>
+        <button class="btn btn-primary" id="confirm-booking-btn">CONFIRM RESERVATION</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Success Pass Modal -->
+  <div class="modal-overlay" id="booking-pass-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" style="color: var(--status-available);">🎉 Facility Reserved!</div>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      
+      <div class="booking-pass">
+        <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">OFFICIAL CAMPUS ACCESS PASS</div>
+        <div id="pass-facility-name" style="font-size: 1.3rem; font-weight: 900; margin: 0.4rem 0;"></div>
+        <div id="pass-time-slot" style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);"></div>
+        <div id="pass-walk-time" style="font-size: 0.8rem; color: var(--accent-cyan); margin: 0.4rem 0;"></div>
+        
+        <div style="margin: 1rem 0; padding: 0.75rem; background: #ffffff; border-radius: 8px; display: inline-block;">
+          <!-- QR Visual Representation -->
+          <div style="width: 120px; height: 120px; background: repeating-linear-gradient(45deg, #000, #000 10px, #fff 10px, #fff 20px);"></div>
+        </div>
+
+        <div class="booking-pass-id" id="pass-booking-id">BK-00000</div>
+      </div>
+
+      <div style="margin-top: 1.25rem;">
+        <button class="btn btn-primary modal-close-btn">DONE & CLOSE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Location Picker Modal -->
+  <div class="modal-overlay" id="location-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Select Your Campus Location</div>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+        Select where you are currently located on the 110-acre campus to calculate walking distances:
+      </p>
+      <div id="location-options-list">
+        <!-- Locations rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PWA Install Banner -->
+  <div id="pwa-install-banner" class="pwa-install-banner" style="display: none;">
+    <div class="pwa-install-content">
+      <div class="pwa-install-icon">📍</div>
+      <div class="pwa-install-text">
+        <strong>Install "What's Free?" App</strong>
+        <span>Get instant campus availability with one tap — works offline too!</span>
+      </div>
+      <div class="pwa-install-actions">
+        <button id="pwa-install-btn" class="btn btn-primary" style="width: auto; padding: 0.5rem 1rem; font-size: 0.82rem;">Install App</button>
+        <button id="pwa-dismiss-btn" class="btn btn-secondary btn-icon-only" style="font-size: 1rem;">&times;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offline Indicator -->
+  <div id="offline-indicator" class="offline-indicator" style="display: none;">
+    <span>📡 You are offline — showing cached campus data</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- PWA Registration & Install Logic -->
+  <script>
+    (function() {
+      // --- Service Worker Registration ---
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js')
+            .then((registration) => {
+              console.log('[PWA] Service Worker registered with scope:', registration.scope);
+
+              // Check for updates periodically
+              setInterval(() => registration.update(), 60 * 60 * 1000); // Every hour
+            })
+            .catch((err) => {
+              console.log('[PWA] Service Worker registration failed:', err);
+            });
+        });
+      }
+
+      // --- PWA Install Prompt ---
+      let deferredPrompt = null;
+      const installBanner = document.getElementById('pwa-install-banner');
+      const installBtn = document.getElementById('pwa-install-btn');
+      const dismissBtn = document.getElementById('pwa-dismiss-btn');
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        // Show install banner if user hasn't dismissed it
+        if (!localStorage.getItem('pwa-install-dismissed')) {
+          if (installBanner) installBanner.style.display = 'flex';
+        }
+      });
+
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (!deferredPrompt) return;
+
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+
+          if (outcome === 'accepted') {
+            console.log('[PWA] User accepted install prompt');
+          }
+          deferredPrompt = null;
+          if (installBanner) installBanner.style.display = 'none';
+        });
+      }
+
+      if (dismissBtn) {
+        dismissBtn.addEventListener('click', () => {
+          if (installBanner) installBanner.style.display = 'none';
+          localStorage.setItem('pwa-install-dismissed', 'true');
+        });
+      }
+
+      // Detect when app was successfully installed
+      window.addEventListener('appinstalled', () => {
+        console.log('[PWA] App installed successfully!');
+        if (installBanner) installBanner.style.display = 'none';
+        deferredPrompt = null;
+      });
+
+      // --- Offline / Online Detection ---
+      const offlineBar = document.getElementById('offline-indicator');
+
+      function updateOnlineStatus() {
+        if (offlineBar) {
+          offlineBar.style.display = navigator.onLine ? 'none' : 'flex';
+        }
+      }
+
+      window.addEventListener('online', updateOnlineStatus);
+      window.addEventListener('offline', updateOnlineStatus);
+      updateOnlineStatus();
+
+      // --- Deep Link Hash Handler (for app shortcuts) ---
+      function handleDeepLink() {
+        const hash = window.location.hash.replace('#', '');
+        if (hash) {
+          // Wait for app to initialize
+          setTimeout(() => {
+            const tabBtn = document.querySelector(`[data-tab="${hash}"]`);
+            if (tabBtn) tabBtn.click();
+          }, 300);
+        }
+      }
+
+      window.addEventListener('hashchange', handleDeepLink);
+      window.addEventListener('DOMContentLoaded', handleDeepLink);
+
+      // --- iOS Install Instructions (no beforeinstallprompt on Safari) ---
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+
+      if (isIOS && !isStandalone && !localStorage.getItem('pwa-install-dismissed')) {
+        if (installBanner) {
+          installBanner.style.display = 'flex';
+          const textEl = installBanner.querySelector('.pwa-install-text span');
+          if (textEl) textEl.textContent = 'Tap the Share button ⬆️ then "Add to Home Screen" to install this app.';
+          if (installBtn) installBtn.style.display = 'none';
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
+
