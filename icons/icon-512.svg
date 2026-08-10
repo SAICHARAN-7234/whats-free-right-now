@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <!-- Primary Gradient: Cyan -> Blue -> Purple -->
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+
+    <!-- Linear Gradient for Lightning Symbol -->
+    <linearGradient id="symbolGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#e0f2fe" />
+    </linearGradient>
+
+    <!-- Radial Glow behind Pin Head -->
+    <radialGradient id="pinHeadGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.45" />
+      <stop offset="60%" stop-color="#3b82f6" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Ambient Dark Background Glow -->
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.22" />
+      <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- High-Definition Drop Shadow for Pin -->
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.75" />
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#06b6d4" flood-opacity="0.4" />
+    </filter>
+
+    <!-- Neon Glow Filter for Pulse & Radar Nodes -->
+    <filter id="glowFilter" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Intense Glow for Inner Symbol -->
+    <filter id="symbolGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Dark Rounded Container Background -->
+  <rect width="512" height="512" rx="108" fill="#07090e" stroke="url(#mainGradient)" stroke-opacity="0.25" stroke-width="2" />
+  <circle cx="256" cy="245" r="220" fill="url(#bgGlow)" />
+
+  <!-- Radar Grid Circles -->
+  <circle cx="256" cy="215" r="120" fill="none" stroke="url(#mainGradient)" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.35" />
+  <circle cx="256" cy="215" r="165" fill="none" stroke="url(#mainGradient)" stroke-width="1.5" stroke-dasharray="6 10" opacity="0.25" />
+  <circle cx="256" cy="215" r="210" fill="none" stroke="url(#mainGradient)" stroke-width="1.5" stroke-dasharray="8 12" opacity="0.15" />
+
+  <!-- Radar Axis Marks -->
+  <line x1="256" y1="52" x2="256" y2="70" stroke="url(#mainGradient)" stroke-width="2" opacity="0.4" stroke-linecap="round" />
+  <line x1="256" y1="360" x2="256" y2="378" stroke="url(#mainGradient)" stroke-width="2" opacity="0.3" stroke-linecap="round" />
+  <line x1="52" y1="215" x2="70" y2="215" stroke="url(#mainGradient)" stroke-width="2" opacity="0.3" stroke-linecap="round" />
+  <line x1="442" y1="215" x2="460" y2="215" stroke="url(#mainGradient)" stroke-width="2" opacity="0.3" stroke-linecap="round" />
+
+  <!-- Radiating Radar Pulse Waves (Arcs) -->
+  <path d="M 148 134 A 135 135 0 0 1 364 134" fill="none" stroke="url(#mainGradient)" stroke-width="5" stroke-linecap="round" opacity="0.85" filter="url(#glowFilter)" />
+  <path d="M 115 110 A 175 175 0 0 1 397 110" fill="none" stroke="url(#mainGradient)" stroke-width="4" stroke-linecap="round" opacity="0.55" filter="url(#glowFilter)" />
+  <path d="M 82 86 A 215 215 0 0 1 430 86" fill="none" stroke="url(#mainGradient)" stroke-width="3" stroke-linecap="round" stroke-dasharray="10 8" opacity="0.3" />
+
+  <!-- Live Radar Nodes / Signal Dots -->
+  <line x1="256" y1="215" x2="342" y2="102" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.4" />
+  <circle cx="342" cy="102" r="5" fill="#06b6d4" filter="url(#glowFilter)" />
+  <circle cx="170" cy="94" r="4" fill="#3b82f6" filter="url(#glowFilter)" />
+  <circle cx="394" cy="158" r="4" fill="#8b5cf6" filter="url(#glowFilter)" />
+
+  <!-- Ground Ripples Under Location Pin Base -->
+  <ellipse cx="256" cy="388" rx="46" ry="14" fill="none" stroke="url(#mainGradient)" stroke-width="2.5" opacity="0.75" />
+  <ellipse cx="256" cy="388" rx="82" ry="23" fill="none" stroke="url(#mainGradient)" stroke-width="1.5" stroke-dasharray="6 6" opacity="0.4" />
+  <ellipse cx="256" cy="388" rx="118" ry="32" fill="none" stroke="url(#mainGradient)" stroke-width="1" stroke-dasharray="8 8" opacity="0.2" />
+
+  <!-- Stylized Location Pin Body -->
+  <path d="M 256 120 C 203.5 120 161 162.5 161 215 C 161 278 243 355 251.5 362.5 C 254 364.8 258 364.8 260.5 362.5 C 269 355 351 278 351 215 C 351 162.5 308.5 120 256 120 Z" fill="url(#mainGradient)" filter="url(#dropShadow)" />
+
+  <!-- Inner Pin Dial & Core -->
+  <circle cx="256" cy="215" r="54" fill="url(#pinHeadGlow)" />
+  <circle cx="256" cy="215" r="50" fill="#07090e" stroke="url(#mainGradient)" stroke-width="3.5" />
+
+  <!-- Inner Lightning Bolt / Availability Symbol -->
+  <path d="M 266 178 L 228 221 L 250 221 L 242 254 L 282 209 L 260 209 Z" fill="url(#symbolGradient)" filter="url(#symbolGlow)" />
+</svg>
